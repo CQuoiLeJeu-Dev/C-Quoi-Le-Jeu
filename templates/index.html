@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>C Quoi Le Jeu</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <link rel="icon" href="{{ url_for('static', filename='images/icône.png') }}" type="image/png">
+    <link rel="icon" href="{{ url_for('static', filename='images/logo.svg') }}" type="image/png">
 </head>
 <body>
     <video autoplay muted loop id="background-video">
@@ -14,7 +14,7 @@
     <div class="header">
         <!-- En-tête avec logo et menu utilisateur -->
         <div class="logo-container" onclick="location.href='/'">
-            <img src="{{ url_for('static', filename='images/icône.png') }}" alt="Logo" class="logo">
+            <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="Logo" class="logo">
             <span class="site-name">C Quoi Le Jeu</span>
         </div>
         {% if username %}
@@ -34,6 +34,9 @@
         <p>Le but du jeu est de deviner le nom d'un jeu vidéo à partir d'une image. Entrez votre réponse dans la barre de texte et appuyez sur Entrée ou cliquez sur Soumettre.</p>
         <label for="game-count">Nombre de jeux à deviner :</label>
         <select id="game-count">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
             <option value="5">5</option>
             <option value="10">10</option>
             <option value="15" selected>15</option>

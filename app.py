@@ -4,6 +4,9 @@ import sqlite3
 import os
 import logging
 import bcrypt
+import time
+
+
 
 app = Flask(__name__)
 app.secret_key = 'SECRET_KEY'
@@ -32,6 +35,7 @@ def close_connection(exception):
     db = getattr(g, '_database', None)
     if db is not None:
         db.close()
+
 
 def query_db(query, args=(), one=False):
     cur = get_db().execute(query, args)
@@ -72,282 +76,22 @@ def get_user_games(user_id):
     return db.execute('SELECT game_name, score, played_at FROM games_history WHERE user_id = ?', (user_id,)).fetchall()
 
 # Liste complète des jeux
-full_games_list = [
-    {
-        "name": "The Legend of Zelda : Tears of the Kingdom",
-        "image": "images/IMG_001.webp",
-        "answers": [
-            "the legend of zelda : tears of the kingdom",
-            "the legend of zelda: tears of the kingdom",
-            "totk",
-            "tears of the kingdom",
-            "zelda totk",
-            "zelda: totk",
-            "zelda : totk"
-        ]
-    },
-    {
-        "name": "Pikmin 4",
-        "image": "images/IMG_002.webp",
-        "answers": [
-            "pikmin 4",
-            "pikmin4",
-            "pikmin"
-        ]
-    },
-    {
-        "name": "Minecraft",
-        "image": "images/IMG_003.webp",
-        "answers": [
-            "minecraft",
-            "mc"
-        ]
-    },
-    {
-        "name": "Mario Kart 8 Deluxe",
-        "image": "images/IMG_004.webp",
-        "answers": [
-            "mario kart 8 deluxe",
-            "mk 8 deluxe",
-            "mario kart",
-            "mk",
-            "mk8d",
-            "mk 8 d",
-            "mk8",
-            "mk 8"
-        ]
-    },
-    {
-        "name": "Pokémon Rouge et Bleu",
-        "image": "images/IMG_005.webp",
-        "answers": [
-            "pokemon rouge et bleu",
-            "pokémon rouge et bleu",
-            "pokemon rouge",
-            "pokemon bleu",
-            "pokemon",
-            "pokémon"
-        ]
-    },
-    {
-        "name": "GTA 5",
-        "image": "images/IMG_006.webp",
-        "answers": [
-            "grand theft auto 5",
-            "grand theft auto V",
-            "grand theft auto",
-            "gta 5",
-            "gta5",
-            "gta V",
-            "gta"
-        ]
-    },
-    {
-        "name": "Slime Rancher",
-        "image": "images/IMG_007.webp",
-        "answers": [
-            "slime rancher",
-            "sr"
-        ]
-    },
-    {
-        "name": "Spider-Man 2",
-        "image": "images/IMG_008.webp",
-        "answers": [
-            "spider man 2",
-            "spider-man 2",
-            "spiderman 2",
-            "spider man",
-            "spider-man",
-            "spiderman"
-        ]
-    },
-    {
-        "name": "Paper Mario : La Porte Millénaire",
-        "image": "images/IMG_009.webp",
-        "answers": [
-            "paper mario : la porte millénaire",
-            "paper mario: la porte millénaire",
-            "paper mario"
-        ]
-    },
-    {
-        "name": "Clash of Clans",
-        "image": "images/IMG_010.webp",
-        "answers": [
-            "clash of clans",
-            "coc"
-        ]
-    },
-    {
-        "name": "World of Warcraft",
-        "image": "images/IMG_011.webp",
-        "answers": [
-            "world of warcraft",
-            "wow"
-        ]
-    },
-    {
-      "name": "League of Legends",
-      "image": "images/IMG_012.webp",
-      "answers": [
-          "league of legends",
-          "lol"
-        ]
-    },
-    {
-        "name": "Overwatch",
-        "image": "images/IMG_013.webp",
-        "answers": [
-            "overwatch",
-            "ow"
-        ]
-    },
-    {
-        "name": "Genshin Impact",
-        "image": "images/IMG_014.webp",
-        "answers": [
-            "genshin impact",
-            "gi"
-        ]
-    },
-    {
-        "name": "Rocket League",
-        "image": "images/IMG_015.webp",
-        "answers": [
-            "rocket league",
-            "rl"
-        ]
-    },
-    {
-        "name": "Elden Ring",
-        "image": "images/IMG_016.webp",
-        "answers": [
-            "elden ring"
-        ]
-    },
-    {
-        "name": "FIFA 21",
-        "image": "images/IMG_017.webp",
-        "answers": [
-            "fifa 21",
-            "fifa"
-        ]
-    },
-    {
-        "name": "Animal Crossing : New Horizons",
-        "image": "images/IMG_018.webp",
-        "answers": [
-            "animal crossing : new horizons",
-            "animal crossing: new horizons",
-            "animal crossing new horizons",
-            "acnh",
-            "animal crossing"
-        ]
-    },
-    {
-        "name": "Boomerang Fu",
-        "image": "images/IMG_019.webp",
-        "answers": [
-            "boomerang fu",
-            "boomerangfu"
-        ]
-    },
-    {
-        "name": "Deltarune",
-        "image": "images/IMG_020.webp",
-        "answers": [
-            "deltarune",
-            "delta rune",
-            "dtrn",
-            "dr"
-        ]
-    },
-    {
-        "name": "Hades",
-        "image": "images/IMG_021.webp",
-        "answers": [
-            "hades",
-            "hadès"
-        ]
-    },
-    {
-        "name": "It Takes Two",
-        "image": "images/IMG_022.webp",
-        "answers": [
-            "it takes two",
-            "it takes 2",
-            "itt",
-            "it2"
-        ]
-    },
-    {
-        "name": "Mini Motorways",
-        "image": "images/IMG_023.webp",
-        "answers": [
-            "mini motorways",
-            "minimotorways",
-            "mmtw",
-            "mmw"
-        ]
-    },
-    {
-        "name": "Rayman Legends : Definitive Edition",
-        "image": "images/IMG_024.webp",
-        "answers": [
-            "rayman legends : definitive edition",
-            "rayman legends: definitive edition",
-            "rayman legends",
-            "rayman",
-            "rlde",
-            "rayman definitive edition"
-        ]
-    },
-    {
-        "name": "Super Smash Bros. Ultimate",
-        "image": "images/IMG_025.webp",
-        "answers": [
-            "super smash bros. ultimate",
-            "super smash bros ultimate",
-            "smash bros ultimate",
-            "super smash bros",
-            "ssbu",
-            "ssb"
-        ]
-    },
-    {
-        "name": "Splatoon 3",
-        "image": "images/IMG_026.webp",
-        "answers": [
-            "splatoon 3",
-            "splatoon3",
-            "splatoon"
-        ]
-    },
-    {
-        "name": "Undertale",
-        "image": "images/IMG_027.webp",
-        "answers": [
-            "undertale",
-            "under tale",
-            "udtl",
-            "ut"
-        ]
-    },
-    # Ajouter d'autres jeux ici
-]
+if os.path.exists('games_list.json'):
+    import json
+    with open('games_list.json', 'r') as f:
+        full_games_list = json.load(f)
+else:
+    # Si le fichier n'existe pas, initialisez une liste vide
+    import json
+    full_games_list = []
+    print("Le fichier 'games_list.json' n'existe pas. Initialisation d'une liste vide.")
 
 # Liste des jeux pour la session actuelle
-games = []
+games = {} # comment cette ligne de code peut permetre de stocker les jeux pour plusieur utilisateurs en meme temps
+
 
 current_game_index = 0
-lock_file = ".url_opened_lock"
 score = 0  # Initialise la variable score ici
-
-def reset_game():
-    global current_game_index, score
-    current_game_index = 0
-    score = 0  # Réinitialise le score à chaque nouvelle partie
 
 @app.route('/')
 def index():
@@ -362,7 +106,7 @@ def login():
         password = request.form['password']
         if check_user(username, password):
             session['username'] = username
-            reset_game()  # Assurez-vous que reset_game est appelé ici
+              # Assurez-vous que st appelé ici
             return redirect(url_for('index'))
         flash("Nom d'utilisateur ou mot de passe incorrect.")
         return render_template('login.html')
@@ -396,7 +140,7 @@ def register():
             # Si l'utilisateur n'existe pas, enregistrez-le
             save_user(username, password)
             session['username'] = username
-            reset_game()
+            
             return redirect(url_for('index'))
 
         except Exception as e:
@@ -413,61 +157,115 @@ def logout():
     flash("Vous avez été déconnecté.")
     return redirect(url_for('login'))
 
-@app.route('/get-game', methods=['GET'])
-def get_game():
-    global current_game_index
-    if current_game_index >= len(games):
-        return jsonify({"name": "Finished", "image": ""})
-    game = games[current_game_index]
-    return jsonify(game)
+@app.route('/get-game', methods=['POST'])
+def get_game(game_id=None):
+    data = request.json
+    print("Received data:", data)
+    if "gameId" in data or game_id is not None:
+        game_id = data['gameId'] or game_id
+        user_id = get_user_id_by_username(session['username'])
+        print(game_id)
+        global games
+        print(games)
+        if game_id in games:
+            current_game_index = games[game_id]["current_game_index"]
+            score = games[game_id]["score"]
+            print("Current game index before increment:", current_game_index, len(games), current_game_index >= len(games))
+            if current_game_index >= len(games):
+                save_game_result(user_id, games[game_id]["data"][current_game_index]["name"], score)
+                games[game_id] = None  # Supprime le jeu de la mémoire
+                print("Game finished, removing from memory.")
+                return jsonify({"name": "Finished", "image": "/images/end.webp"})
+            party = games[game_id]["data"][games[game_id]["current_game_index"]]# récupère l'index de la partie actuelle puis l'utilise pour obtenir le jeu actuel
+            response_party = party.copy()
+            response_party["answers"] = []  # Ou supprime la clé si tu préfères
+            return jsonify(response_party)
+        else:
+            return jsonify({"error": "Game not found"}), 404
+    else:
+        return jsonify({"error": "Game ID not provided"}), 400
 
 @app.route('/next-game', methods=['POST'])
 def next_game():
-    global current_game_index, score
-    user_id = get_user_id_by_username(session['username'])
-    game = games[current_game_index]
-    save_game_result(user_id, game["name"], score)
-    current_game_index += 1
-    score = 0  # Réinitialise le score après avoir enregistré le résultat
-    return get_game()
+    data = request.json
+    if "gameId" in data:
+        game_id = data['gameId']
+        if game_id not in games:
+            return jsonify({"error": "Game not found"}), 404
+        else:
+            global current_game_index, score
+            print("Current game index:", current_game_index)
+            print("Score before saving:", score)
+            user_id = games[game_id]["user_id"]
+            # game = games
+            print("Game data:", games[game_id]["data"])
+            print("Saving game result for user ID:", user_id)
+            print("Score after saving:", score)
+            games[game_id]["current_game_index"] += 1
+            return get_game(game_id)
+    else:
+        return jsonify({"error": "Game ID not provided"}), 400
 
 @app.route('/skip-game', methods=['POST'])
 def skip_game():
-    global current_game_index, score
-    score -= 50  # Pénalité pour avoir passé le jeu
-    current_game_index += 1
-    return get_game()
+    data = request.json
+    if "gameId" in data:
+        game_id = data['gameId']
+        if game_id not in games:
+            return jsonify({"error": "Game not found"}), 404
+        else:
+            current_game_index = games[game_id]["current_game_index"]
+            score = games[game_id]["score"]
+            games[game_id]["current_game_index"] += 1
+            if score >= 50: # reduire le score de 50 sans passer en dessous de 0
+                score -= 50
+            else:
+                score = 0
+            return get_game()
+    else:
+        return jsonify({"error": "Game ID not provided"}), 400
 
 @app.route('/check-answer', methods=['POST'])
 def check_answer():
-    global score
     data = request.json
-    user_answer = data.get('answer', '').strip().lower()
-    game = games[current_game_index]
-    is_correct = user_answer in [answer.lower() for answer in game["answers"]]
-    if is_correct:
-        score += 100  # Augmente le score si la réponse est correcte
-    return jsonify({"is_correct": is_correct})
+    if "gameId" in data:
+        game_id = data['gameId']
+        if game_id not in games:
+            return jsonify({"error": "Game not found"}), 404
+        else:
+            data = request.json
+            user_answer = data.get('answer', '').strip().lower()
+            print("=== DEBUG ===")
+            print("Game ID:", game_id)
+            print("Current Index:", games[game_id]["current_game_index"])
+            print("Game Data:", games[game_id]["data"])
+            party = games[game_id]["data"][games[game_id]["current_game_index"]]
+            print("User answer:", user_answer ,"Party answers:", party["answers"])
+            is_correct = user_answer in [answer.lower() for answer in party["answers"]]
+            if is_correct:
+                games[game_id]["score"] += 100
+            return jsonify({"is_correct": is_correct})
+    else:
+        return jsonify({"error": "Game ID not provided"}), 400
 
-@app.route('/set-game-count', methods=['POST'])
-def set_game_count():
+@app.route('/creat_game', methods=['POST'])
+def creat_game():
     global games
+    GAME_ID = random.randint(1000000, 9999999)
+
     data = request.json
     count = int(data.get('count', 10))
-    games = random.sample(full_games_list, min(count, len(full_games_list)))  # Sélectionne aléatoirement le nombre de jeux spécifié
-    reset_game()
-    return '', 204
+    games[GAME_ID] = {
+        "username": session['username'],
+        "user_id": get_user_id_by_username(session['username']),
+        "data": random.sample(full_games_list, min(count, len(full_games_list))),
+        "score": 0,
+        "current_game_index": 0,
+        "endTime": "TODO: mettre une date de fin pour éviter d'avoir des parties en cours pendant des mois et qui occupent de la mémoire"
+    }
+    
+    return jsonify({"game_id": GAME_ID, "success": True})
 
-@app.route('/delete-lock', methods=['POST'])
-def delete_lock():
-    if os.path.exists(lock_file):
-        os.remove(lock_file)
-    return '', 204
-
-@app.route('/reset-game', methods=['POST'])
-def reset_game_route():
-    reset_game()
-    return '', 204
 
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
@@ -523,16 +321,8 @@ def get_games_list():
 def contact():
     return render_template('contact.html')
 
-def open_browser():
-    if not os.path.exists(lock_file):
-        with open(lock_file, 'w') as f:
-            f.write("URL opened")
-        import webbrowser
-        webbrowser.open('http://127.0.0.1:5000')
 
 if __name__ == '__main__':
     with app.app_context():
         init_db()
-    if not os.path.exists(lock_file):
-        open_browser()
     app.run(debug=True)

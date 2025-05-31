@@ -1,0 +1,263 @@
+[
+    {
+        "name": "The Legend of Zelda : Tears of the Kingdom",
+        "image": "images/IMG_001.webp",
+        "answers": [
+            "the legend of zelda : tears of the kingdom",
+            "the legend of zelda: tears of the kingdom",
+            "totk",
+            "tears of the kingdom",
+            "zelda totk",
+            "zelda: totk",
+            "zelda : totk"
+        ]
+    },
+    {
+        "name": "Pikmin 4",
+        "image": "images/IMG_002.webp",
+        "answers": [
+            "pikmin 4",
+            "pikmin4",
+            "pikmin"
+        ]
+    },
+    {
+        "name": "Minecraft",
+        "image": "images/IMG_003.webp",
+        "answers": [
+            "minecraft",
+            "mc"
+        ]
+    },
+    {
+        "name": "Mario Kart 8 Deluxe",
+        "image": "images/IMG_004.webp",
+        "answers": [
+            "mario kart 8 deluxe",
+            "mk 8 deluxe",
+            "mario kart",
+            "mk",
+            "mk8d",
+            "mk 8 d",
+            "mk8",
+            "mk 8"
+        ]
+    },
+    {
+        "name": "Pokémon Rouge et Bleu",
+        "image": "images/IMG_005.webp",
+        "answers": [
+            "pokemon rouge et bleu",
+            "pokémon rouge et bleu",
+            "pokemon rouge",
+            "pokemon bleu",
+            "pokemon",
+            "pokémon"
+        ]
+    },
+    {
+        "name": "GTA 5",
+        "image": "images/IMG_006.webp",
+        "answers": [
+            "grand theft auto 5",
+            "grand theft auto V",
+            "grand theft auto",
+            "gta 5",
+            "gta5",
+            "gta V",
+            "gta"
+        ]
+    },
+    {
+        "name": "Slime Rancher",
+        "image": "images/IMG_007.webp",
+        "answers": [
+            "slime rancher",
+            "sr"
+        ]
+    },
+    {
+        "name": "Spider-Man 2",
+        "image": "images/IMG_008.webp",
+        "answers": [
+            "spider man 2",
+            "spider-man 2",
+            "spiderman 2",
+            "spider man",
+            "spider-man",
+            "spiderman"
+        ]
+    },
+    {
+        "name": "Paper Mario : La Porte Millénaire",
+        "image": "images/IMG_009.webp",
+        "answers": [
+            "paper mario : la porte millénaire",
+            "paper mario: la porte millénaire",
+            "paper mario"
+        ]
+    },
+    {
+        "name": "Clash of Clans",
+        "image": "images/IMG_010.webp",
+        "answers": [
+            "clash of clans",
+            "coc"
+        ]
+    },
+    {
+        "name": "World of Warcraft",
+        "image": "images/IMG_011.webp",
+        "answers": [
+            "world of warcraft",
+            "wow"
+        ]
+    },
+    {
+      "name": "League of Legends",
+      "image": "images/IMG_012.webp",
+      "answers": [
+          "league of legends",
+          "lol"
+        ]
+    },
+    {
+        "name": "Overwatch",
+        "image": "images/IMG_013.webp",
+        "answers": [
+            "overwatch",
+            "ow"
+        ]
+    },
+    {
+        "name": "Genshin Impact",
+        "image": "images/IMG_014.webp",
+        "answers": [
+            "genshin impact",
+            "gi"
+        ]
+    },
+    {
+        "name": "Rocket League",
+        "image": "images/IMG_015.webp",
+        "answers": [
+            "rocket league",
+            "rl"
+        ]
+    },
+    {
+        "name": "Elden Ring",
+        "image": "images/IMG_016.webp",
+        "answers": [
+            "elden ring"
+        ]
+    },
+    {
+        "name": "FIFA 21",
+        "image": "images/IMG_017.webp",
+        "answers": [
+            "fifa 21",
+            "fifa"
+        ]
+    },
+    {
+        "name": "Animal Crossing : New Horizons",
+        "image": "images/IMG_018.webp",
+        "answers": [
+            "animal crossing : new horizons",
+            "animal crossing: new horizons",
+            "animal crossing new horizons",
+            "acnh",
+            "animal crossing"
+        ]
+    },
+    {
+        "name": "Boomerang Fu",
+        "image": "images/IMG_019.webp",
+        "answers": [
+            "boomerang fu",
+            "boomerangfu"
+        ]
+    },
+    {
+        "name": "Deltarune",
+        "image": "images/IMG_020.webp",
+        "answers": [
+            "deltarune",
+            "delta rune",
+            "dtrn",
+            "dr"
+        ]
+    },
+    {
+        "name": "Hades",
+        "image": "images/IMG_021.webp",
+        "answers": [
+            "hades",
+            "hadès"
+        ]
+    },
+    {
+        "name": "It Takes Two",
+        "image": "images/IMG_022.webp",
+        "answers": [
+            "it takes two",
+            "it takes 2",
+            "itt",
+            "it2"
+        ]
+    },
+    {
+        "name": "Mini Motorways",
+        "image": "images/IMG_023.webp",
+        "answers": [
+            "mini motorways",
+            "minimotorways",
+            "mmtw",
+            "mmw"
+        ]
+    },
+    {
+        "name": "Rayman Legends : Definitive Edition",
+        "image": "images/IMG_024.webp",
+        "answers": [
+            "rayman legends : definitive edition",
+            "rayman legends: definitive edition",
+            "rayman legends",
+            "rayman",
+            "rlde",
+            "rayman definitive edition"
+        ]
+    },
+    {
+        "name": "Super Smash Bros. Ultimate",
+        "image": "images/IMG_025.webp",
+        "answers": [
+            "super smash bros. ultimate",
+            "super smash bros ultimate",
+            "smash bros ultimate",
+            "super smash bros",
+            "ssbu",
+            "ssb"
+        ]
+    },
+    {
+        "name": "Splatoon 3",
+        "image": "images/IMG_026.webp",
+        "answers": [
+            "splatoon 3",
+            "splatoon3",
+            "splatoon"
+        ]
+    },
+    {
+        "name": "Undertale",
+        "image": "images/IMG_027.webp",
+        "answers": [
+            "undertale",
+            "under tale",
+            "udtl",
+            "ut"
+        ]
+    }
+]

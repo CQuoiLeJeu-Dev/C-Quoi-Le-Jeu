@@ -6,10 +6,16 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentGameIndex = 0;
     let currentGameName = "";
     let full_games_list = []; // Initialisez la liste des jeux comme vide
-
+    let gameId = null; // ID de la partie en cours
     function loadGame() {
         // Charge le jeu actuel depuis le serveur
-        fetch('/get-game')
+        fetch('/get-game', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ gameId: gameId })
+        })
             .then(response => response.json())
             .then(data => {
                 if (data.name === "Finished") {
@@ -57,14 +63,20 @@ document.addEventListener('DOMContentLoaded', function() {
         currentGameIndex = 0;
 
         // Envoie le nombre de jeux à deviner au serveur
-        fetch('/set-game-count', {
+        fetch('/creat_game', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({ count: gameCount })
-        }).then(() => {
-            loadGame();
+        }).then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                gameId = data.game_id; // Stocke l'ID de la partie en cours
+                loadGame();
+            } else {
+                alert("Erreur lors de la création du jeu. Veuillez réessayer.");
+            }
         });
     });
 
@@ -92,11 +104,15 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('skip-button').addEventListener('click', function() {
         // Passe le jeu actuel
         if (!isQuizFinished) {
-            score -= 50;
+            if (score >= 50) {
+                score -= 50;
+            }else{
+                score = 0
+            }
             updateScoreDisplay();
             document.getElementById('feedback').innerText = 'Plus d\'essais ! La réponse était ' + currentGameName + '.';
             setTimeout(function() {
-                fetch('/skip-game', { method: 'POST' })
+                fetch('/skip-game', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ gameId: gameId }) })
                     .then(response => response.json())
                     .then(nextGameData => {
                         if (nextGameData.name === "Finished") {
@@ -119,13 +135,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    window.addEventListener('beforeunload', function() {
-        // Supprime le fichier de verrouillage avant de quitter la page
-        fetch('/delete-lock', { method: 'POST' });
-    });
 
     function updateScoreDisplay() {
-        // Met à jour l'affichage du score et des essais restants
+    // Met à jour l'affichage du score et des essais restants
         document.getElementById('score').innerText = score;
         document.getElementById('remaining-attempts').innerText = remainingAttempts;
     }
@@ -145,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ answer: userAnswer })
+                body: JSON.stringify({ answer: userAnswer, gameId })
             })
             .then(response => response.json())
             .then(data => {
@@ -156,7 +168,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     document.getElementById('game-image').classList.add('correct-answer');
                     setTimeout(function() {
                         document.getElementById('game-image').classList.remove('correct-answer');
-                        fetch('/next-game', { method: 'POST' })
+                        fetch('/next-game', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ gameId }) })
                             .then(response => response.json())
                             .then(nextGameData => {
                                 if (nextGameData.name === "Finished") {
@@ -164,6 +176,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                     document.getElementById('game-image').src = '';
                                     document.getElementById('return-home-button').style.display = 'block';
                                     document.getElementById('game-image-container').style.justifyContent = 'center';
+                                    document.getElementById('game-image').src = '/static/'+nextGameData.image;
                                     isQuizFinished = true;
                                 } else {
                                     document.getElementById('game-image').src = `/static/${nextGameData.image}`;
@@ -287,3 +300,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+const table = {
+    cat : [
+        "chat", "félin", "animal de compagnie", "miaou", "ronronnement", "queue", "poils", "griffe", "jouet pour chat", "boîte"
+    ]
+    , dog : [
+        "chien", "canin", "animal de compagnie", "aboiement", "queue", "poils", "jouet pour chien", "os", "collier", "friandise"
+    ]
+    , bird : [
+        "oiseau", "volant", "plumes", "chant", "nid", "bec", "ailes", "perchoir", "cage", "graines"
+    ]
+}
+
+console.table(table);
+console.log(table)

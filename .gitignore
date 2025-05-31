@@ -1,0 +1,42 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# SQLite database
+*.db
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+.pip/
+
+# Flask cache
+instance/
+*.pyc
+
+# VSCode workspace and settings
+.vscode/
+*.code-workspace
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Python egg
+*.egg-info/
+*.egg
+
+# Static build cache (if any)
+static/cache/
+static/*.tmp
+
+
+# Ignore compiled CSS/JS (if using build tools)
+static/css/*.min.css
+static/js/*.min.js
